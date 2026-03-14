@@ -30,7 +30,7 @@ export const TourForm: React.FC<TourFormProps> = ({ onGenerate }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-xl shadow-2xl border border-stone-200">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-5 sm:p-8 rounded-xl shadow-2xl border border-stone-200">
       <div className="space-y-2">
         <label className="flex items-center gap-2 text-sm font-bold text-royal-blue uppercase tracking-wider">
           <MapPin size={18} className="text-thistle-purple" />
@@ -54,7 +54,7 @@ export const TourForm: React.FC<TourFormProps> = ({ onGenerate }) => {
           <Sparkles size={18} className="text-gold" />
           Tour Theme
         </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
           {THEMES.map((theme) => (
             <div
               key={theme.id}

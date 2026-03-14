@@ -49,7 +49,7 @@ function App() {
               EdinGuide AI
             </h1>
           </div>
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold uppercase tracking-wider text-slate-600">
+          <nav className="flex items-center gap-4 md:gap-8 text-xs md:text-sm font-semibold uppercase tracking-wider text-slate-600">
             <button
               onClick={() => setView("form")}
               className={`hover:text-royal-blue transition-colors relative pb-1 ${view === "form" ? "text-royal-blue after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-royal-blue" : ""}`}
@@ -86,12 +86,12 @@ function App() {
               exit={{ opacity: 0, y: -20 }}
               className="max-w-3xl mx-auto px-4 py-12 space-y-8"
             >
-              <div className="text-center space-y-6 mb-12">
-                <h2 className="text-5xl md:text-7xl font-serif font-black tracking-tight leading-tight text-royal-blue">
+              <div className="text-center space-y-4 md:space-y-6 mb-8 md:mb-12 px-2">
+                <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif font-black tracking-tight leading-tight text-royal-blue">
                   Discover <span className="italic text-thistle-purple underline decoration-gold/30">Edinburgh</span> <br />
                   with AI precision.
                 </h2>
-                <p className="text-xl text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium">
+                <p className="text-lg md:text-xl text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium">
                   Choose your vibe, and let our AI craft a personalised walking
                   tour through the historic streets of Scotland's capital.
                 </p>
@@ -122,17 +122,17 @@ function App() {
                 exit={{ opacity: 0, scale: 1.05 }}
                 className="w-full h-full flex flex-col lg:flex-row min-h-[calc(100vh-73px)]"
               >
-                {/* Left side: Map - Full height on desktop */}
-                <div className="w-full lg:w-1/2 h-[calc(100vh-73.5px)] lg:h-auto lg:sticky lg:top-[73.5px] z-10 lg:z-0">
+                {/* Left side: Map - Fixed height on mobile, full on desktop */}
+                <div className="w-full lg:w-1/2 h-[50vh] lg:h-[calc(100vh-73.5px)] lg:sticky lg:top-[73.5px] z-10 lg:z-0">
                   <TourMap 
                     tour={tour} 
                   />
                 </div>
 
                 {/* Right side: Itinerary - Scrollable */}
-                <div className="w-full lg:w-1/2 bg-white p-6 md:p-12 lg:h-[calc(100vh-73.5px)] overflow-y-auto">
+                <div className="w-full lg:w-1/2 bg-white p-5 sm:p-8 md:p-12 lg:h-[calc(100vh-73.5px)] overflow-y-auto">
                   <div className="max-w-2xl mx-auto space-y-8">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 pb-8">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 pb-6 md:pb-8">
                       <div className="space-y-2">
                         <span className="px-3 py-1 bg-thistle-purple text-stone rounded text-xs font-bold uppercase tracking-widest">
                           {tour.theme.replace("_", " ")}

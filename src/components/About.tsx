@@ -10,14 +10,14 @@ export const About: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-12 pb-12"
     >
-      <div className="text-center space-y-4 max-w-2xl mx-auto">
-        <h2 className="text-5xl font-serif font-black tracking-tight text-royal-blue">Our Tour Themes</h2>
-        <p className="text-lg text-slate-700 leading-relaxed font-medium italic">
+      <div className="text-center space-y-4 max-w-2xl mx-auto px-4">
+        <h2 className="text-4xl md:text-5xl font-serif font-black tracking-tight text-royal-blue">Our Tour Themes</h2>
+        <p className="text-base md:text-lg text-slate-700 leading-relaxed font-medium italic">
           EdinGuide AI crafts custom itineraries based on your interests. Explore the different facets of Edinburgh through our curated themes.
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
         {THEMES.map((theme) => {
           const matchingLocations = EDINBURGH_LOCATIONS.filter(loc => loc.themes.includes(theme.id)).slice(0, 3);
           
@@ -26,24 +26,24 @@ export const About: React.FC = () => {
               key={theme.id}
               className="bg-white rounded-xl shadow-2xl border border-stone-200 hover:border-royal-blue/30 transition-all flex flex-col overflow-hidden group"
             >
-              <div className="p-10 space-y-8">
+              <div className="p-6 sm:p-8 lg:p-10 space-y-6 sm:space-y-8">
                 <div className="flex items-center justify-between">
-                  <div className="text-5xl bg-stone/50 w-20 h-20 flex items-center justify-center rounded-lg group-hover:rotate-6 transition-transform">
+                  <div className="text-4xl sm:text-5xl bg-stone/50 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-lg group-hover:rotate-6 transition-transform">
                     {theme.emoji}
                   </div>
-                  <span className="px-4 py-1 bg-thistle-purple text-stone rounded text-[10px] font-black uppercase tracking-[0.2em]">
+                  <span className="px-3 sm:px-4 py-1 bg-thistle-purple text-stone rounded text-[10px] font-black uppercase tracking-[0.2em]">
                     {theme.id.replace('_', ' ')}
                   </span>
                 </div>
                 
                 <div className="space-y-3">
-                  <h3 className="text-3xl font-serif font-black text-royal-blue">{theme.label}</h3>
-                  <p className="text-slate-700 leading-relaxed font-medium">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-black text-royal-blue">{theme.label}</h3>
+                  <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
                     {theme.description}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-6 py-6 border-y border-stone-100">
+                <div className="grid grid-cols-2 gap-4 sm:gap-6 py-4 sm:py-6 border-y border-stone-100">
                   <div className="flex items-center gap-2 text-royal-blue">
                     <Clock size={18} className="text-thistle-purple" />
                     <span className="text-sm font-bold uppercase tracking-widest">{theme.duration}</span>
@@ -92,12 +92,12 @@ export const About: React.FC = () => {
       </div>
 
       <div className="bg-royal-blue rounded-xl p-10 md:p-16 text-stone overflow-hidden relative shadow-2xl">
-        <div className="relative z-10 space-y-8 max-w-2xl">
-          <div className="flex items-center gap-4 border-b border-stone/20 pb-6">
-            <Info size={32} className="text-gold" />
-            <h3 className="text-4xl font-serif font-black uppercase tracking-tight text-stone">Our Methodology</h3>
+        <div className="relative z-10 space-y-6 md:space-y-8 max-w-2xl">
+          <div className="flex items-center gap-4 border-b border-stone/20 pb-4 md:pb-6">
+            <Info size={28} className="text-gold" />
+            <h3 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-tight text-stone">Our Methodology</h3>
           </div>
-          <p className="text-stone/90 text-xl leading-relaxed font-serif italic">
+          <p className="text-stone/90 text-lg md:text-xl leading-relaxed font-serif italic">
             "Our AI engine combines historical data, local insights, and real-time mapping to create a route that fits your schedule and physical pace. Each stop is selected to complement your chosen theme, ensuring a cohesive and immersive experience."
           </p>
           <div className="flex flex-wrap gap-8 pt-4">
