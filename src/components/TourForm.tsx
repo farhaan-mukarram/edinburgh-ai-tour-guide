@@ -48,7 +48,7 @@ export const TourForm: React.FC<TourFormProps> = ({ onGenerate }) => {
           <Sparkles size={18} className="text-amber-500" />
           Tour Theme
         </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
           {THEMES.map((theme) => (
             <div
               key={theme.id}
@@ -60,7 +60,7 @@ export const TourForm: React.FC<TourFormProps> = ({ onGenerate }) => {
             >
               <div
                 onClick={() => setPrefs({ ...prefs, theme: theme.id })}
-                className="p-3 cursor-pointer flex flex-col h-full"
+                className="p-3 cursor-pointer flex flex-col"
               >
                 <div className="flex justify-between items-start">
                   <div className="text-2xl mb-1">{theme.emoji}</div>
