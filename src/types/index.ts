@@ -1,0 +1,31 @@
+export type Theme = 'history' | 'ghosts' | 'harry_potter' | 'nature' | 'food' | 'literature';
+
+export interface Location {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  description: string;
+  themes: Theme[];
+}
+
+export interface TourPreferences {
+  startPoint: string;
+  theme: Theme;
+  durationHours: number;
+  pace: 'relaxed' | 'moderate' | 'brisk';
+}
+
+export interface ItineraryItem {
+  location: Location;
+  estimatedTimeMin: number;
+  narrative: string;
+}
+
+export interface Tour {
+  id: string;
+  itinerary: ItineraryItem[];
+  totalDistanceKm: number;
+  totalDurationMin: number;
+  theme: Theme;
+}
