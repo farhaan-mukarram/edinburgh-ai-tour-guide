@@ -61,11 +61,11 @@ export const TourMap: React.FC<TourMapProps> = ({ tour }) => {
         center={[55.9486, -3.1999]}
         zoom={14}
         scrollWheelZoom={false}
-        className="h-full w-full grayscale-[0.2] contrast-[1.1]"
+        className="h-full w-full"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         />
         {tour.itinerary.map((item, index) => (
           <Marker 
