@@ -11,8 +11,8 @@ export const About: React.FC = () => {
       className="space-y-12 pb-12"
     >
       <div className="text-center space-y-4 max-w-2xl mx-auto">
-        <h2 className="text-4xl font-black tracking-tight">Our Tour Themes</h2>
-        <p className="text-lg text-slate-600 leading-relaxed">
+        <h2 className="text-5xl font-serif font-black tracking-tight text-royal-blue">Our Tour Themes</h2>
+        <p className="text-lg text-slate-700 leading-relaxed font-medium italic">
           EdinGuide AI crafts custom itineraries based on your interests. Explore the different facets of Edinburgh through our curated themes.
         </p>
       </div>
@@ -24,54 +24,54 @@ export const About: React.FC = () => {
           return (
             <div 
               key={theme.id}
-              className="bg-white rounded-3xl shadow-xl border border-slate-100 hover:border-blue-200 transition-all flex flex-col overflow-hidden group"
+              className="bg-white rounded-xl shadow-2xl border border-stone-200 hover:border-royal-blue/30 transition-all flex flex-col overflow-hidden group"
             >
-              <div className="p-8 space-y-6">
+              <div className="p-10 space-y-8">
                 <div className="flex items-center justify-between">
-                  <div className="text-4xl bg-slate-50 w-16 h-16 flex items-center justify-center rounded-2xl group-hover:scale-110 transition-transform">
+                  <div className="text-5xl bg-stone/50 w-20 h-20 flex items-center justify-center rounded-lg group-hover:rotate-6 transition-transform">
                     {theme.emoji}
                   </div>
-                  <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <span className="px-4 py-1 bg-thistle-purple text-stone rounded text-[10px] font-black uppercase tracking-[0.2em]">
                     {theme.id.replace('_', ' ')}
                   </span>
                 </div>
                 
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold">{theme.label}</h3>
-                  <p className="text-slate-600 leading-relaxed">
+                <div className="space-y-3">
+                  <h3 className="text-3xl font-serif font-black text-royal-blue">{theme.label}</h3>
+                  <p className="text-slate-700 leading-relaxed font-medium">
                     {theme.description}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 py-4 border-y border-slate-50">
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <Clock size={18} className="text-blue-500" />
-                    <span className="text-sm font-medium">{theme.duration}</span>
+                <div className="grid grid-cols-2 gap-6 py-6 border-y border-stone-100">
+                  <div className="flex items-center gap-2 text-royal-blue">
+                    <Clock size={18} className="text-thistle-purple" />
+                    <span className="text-sm font-bold uppercase tracking-widest">{theme.duration}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <Calendar size={18} className="text-blue-500" />
-                    <span className="text-sm font-medium">{theme.bestTime}</span>
+                  <div className="flex items-center gap-2 text-royal-blue">
+                    <Calendar size={18} className="text-thistle-purple" />
+                    <span className="text-sm font-bold uppercase tracking-widest">{theme.bestTime}</span>
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Key Highlights</h4>
-                  <ul className="grid grid-cols-1 gap-2">
+                <div className="space-y-4">
+                  <h4 className="text-[10px] font-black text-royal-blue/40 uppercase tracking-[0.3em]">Key Highlights</h4>
+                  <ul className="grid grid-cols-1 gap-3">
                     {theme.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-slate-700">
-                        <CheckCircle2 size={16} className="text-green-500" />
-                        <span className="text-sm">{highlight}</span>
+                      <li key={idx} className="flex items-center gap-2 text-slate-800 font-serif italic text-base">
+                        <CheckCircle2 size={16} className="text-moss-green" />
+                        <span>{highlight}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 {matchingLocations.length > 0 && (
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Featured Stops</h4>
+                  <div className="space-y-4">
+                    <h4 className="text-[10px] font-black text-royal-blue/40 uppercase tracking-[0.3em]">Featured Stops</h4>
                     <div className="flex flex-wrap gap-2">
                       {matchingLocations.map(loc => (
-                        <span key={loc.id} className="px-3 py-1 bg-slate-50 text-slate-600 rounded-lg text-xs font-medium border border-slate-100">
+                        <span key={loc.id} className="px-3 py-1 bg-stone text-royal-blue rounded border border-stone-300 text-[10px] font-black uppercase tracking-wider">
                           {loc.name}
                         </span>
                       ))}
@@ -80,9 +80,9 @@ export const About: React.FC = () => {
                 )}
               </div>
 
-              <div className="bg-slate-50 px-8 py-4 mt-auto border-t border-slate-100">
-                <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
-                  <Sparkles size={16} className="text-blue-500" />
+              <div className="bg-royal-blue px-10 py-5 mt-auto">
+                <div className="flex items-center gap-2 text-xs text-stone font-black uppercase tracking-[0.2em] opacity-80">
+                  <Sparkles size={16} className="text-gold" />
                   <span>AI-Generated Experience</span>
                 </div>
               </div>
@@ -91,22 +91,22 @@ export const About: React.FC = () => {
         })}
       </div>
 
-      <div className="bg-indigo-600 rounded-3xl p-8 md:p-12 text-white overflow-hidden relative">
-        <div className="relative z-10 space-y-6 max-w-xl">
-          <div className="flex items-center gap-3">
-            <Info size={24} className="text-indigo-200" />
-            <h3 className="text-2xl font-bold">How it works</h3>
+      <div className="bg-royal-blue rounded-xl p-10 md:p-16 text-stone overflow-hidden relative shadow-2xl">
+        <div className="relative z-10 space-y-8 max-w-2xl">
+          <div className="flex items-center gap-4 border-b border-stone/20 pb-6">
+            <Info size={32} className="text-gold" />
+            <h3 className="text-4xl font-serif font-black uppercase tracking-tight text-stone">Our Methodology</h3>
           </div>
-          <p className="text-indigo-100 text-lg leading-relaxed">
-            Our AI engine combines historical data, local insights, and real-time mapping to create a route that fits your schedule and physical pace. Each stop is selected to complement your chosen theme, ensuring a cohesive and immersive story.
+          <p className="text-stone/90 text-xl leading-relaxed font-serif italic">
+            "Our AI engine combines historical data, local insights, and real-time mapping to create a route that fits your schedule and physical pace. Each stop is selected to complement your chosen theme, ensuring a cohesive and immersive story."
           </p>
-          <div className="flex gap-4 pt-4">
+          <div className="flex flex-wrap gap-8 pt-4">
              <div className="flex items-center gap-2">
-                <MapPin size={18} className="text-indigo-300" />
+                <MapPin size={18} className="text-thistle-purple" />
                 <span className="text-sm font-semibold">Verified Locations</span>
              </div>
              <div className="flex items-center gap-2">
-                <Sparkles size={18} className="text-indigo-300" />
+                <Sparkles size={18} className="text-gold" />
                 <span className="text-sm font-semibold">Unique Narratives</span>
              </div>
           </div>

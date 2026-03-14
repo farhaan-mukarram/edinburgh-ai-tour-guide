@@ -18,29 +18,29 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-sm">
-          <div className="flex items-center gap-2 text-blue-700">
-            <Clock size={18} />
-            <span className="font-semibold text-sm">~{formatDuration(tour.totalDurationMin)} total</span>
+        <div className="flex items-center justify-between bg-royal-blue p-4 rounded-lg border border-royal-blue shadow-md">
+          <div className="flex items-center gap-2 text-stone">
+            <Clock size={18} className="text-gold" />
+            <span className="font-bold text-sm tracking-wide">~{formatDuration(tour.totalDurationMin)} TOTAL</span>
           </div>
-          <div className="flex items-center gap-2 text-blue-700">
-            <MapIcon size={18} />
-            <span className="font-semibold text-sm">{tour.totalDistanceKm} km walk</span>
+          <div className="flex items-center gap-2 text-stone">
+            <MapIcon size={18} className="text-gold" />
+            <span className="font-bold text-sm tracking-wide">{tour.totalDistanceKm} KM WALK</span>
           </div>
         </div>
 
         {(tour.chosenWeather || tour.chosenCrowds) && (
-          <div className="flex items-center justify-between bg-indigo-50 p-4 rounded-xl border border-indigo-100 shadow-sm">
+          <div className="flex items-center justify-between bg-stone p-4 rounded-lg border border-stone-300 shadow-sm">
             {tour.chosenWeather && (
-              <div className="flex items-center gap-2 text-indigo-700">
-                <Cloud size={18} className="text-indigo-500" />
-                <span className="font-semibold text-sm capitalize">{tour.chosenWeather}</span>
+              <div className="flex items-center gap-2 text-royal-blue">
+                <Cloud size={18} className="text-thistle-purple" />
+                <span className="font-bold text-sm uppercase tracking-wider">{tour.chosenWeather}</span>
               </div>
             )}
             {tour.chosenCrowds && (
-              <div className="flex items-center gap-2 text-indigo-700">
-                <Users size={18} className="text-indigo-500" />
-                <span className="font-semibold text-sm capitalize">{tour.chosenCrowds}</span>
+              <div className="flex items-center gap-2 text-royal-blue">
+                <Users size={18} className="text-thistle-purple" />
+                <span className="font-bold text-sm uppercase tracking-wider">{tour.chosenCrowds}</span>
               </div>
             )}
           </div>
@@ -48,52 +48,51 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
       </div>
 
       <div className="relative">
-        <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-100" />
+        <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-stone-300" />
         
-        <div className="space-y-8">
+        <div className="space-y-12">
           {tour.itinerary.map((item, index) => (
             <motion.div
               key={item.location.id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="relative flex gap-6 itinerary-card"
+              className="relative flex gap-8 itinerary-card"
             >
-              <div className="z-10 flex-shrink-0 w-12 h-12 rounded-full bg-white border-4 border-blue-500 flex items-center justify-center font-bold text-blue-600 shadow-sm">
+              <div className="z-10 flex-shrink-0 w-12 h-12 rounded-full bg-royal-blue border-4 border-stone flex items-center justify-center font-serif font-black text-stone shadow-lg">
                 {index + 1}
               </div>
               
-              <div className="flex-grow pt-1 pb-2">
-                <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+              <div className="flex-grow pt-1 pb-4 border-b border-stone-200">
+                <h3 className="text-2xl font-serif font-black text-royal-blue flex items-center gap-2 mb-1">
                   {item.location.name}
-                  <ChevronRight size={16} className="text-gray-300" />
                 </h3>
-                <div className="flex items-center gap-1.5 text-xs font-medium text-blue-600 mb-2">
+                <div className="flex items-center gap-1.5 text-xs font-black text-thistle-purple mb-3 uppercase tracking-widest">
                   <Clock size={14} />
-                  <span>{formatDuration(item.estimatedTimeMin)}</span>
+                  <span>{formatDuration(item.estimatedTimeMin)} duration</span>
                 </div>
-                <p className="text-gray-500 text-sm mb-4">{item.location.description}</p>
+                <p className="text-slate-700 text-base leading-relaxed mb-6 font-medium italic">{item.location.description}</p>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {item.weatherAdvice && (
-                    <div className="flex flex-col gap-1 p-3 rounded-xl bg-blue-50/50 border border-blue-100">
-                      <div className="flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase tracking-wider">
-                        <Cloud size={12} />
-                        <span>Weather Tip</span>
+                    <div className="flex flex-col gap-1 p-4 rounded bg-stone/50 border border-stone-300">
+                      <div className="flex items-center gap-2 text-[10px] font-black text-royal-blue uppercase tracking-widest">
+                        <Cloud size={12} className="text-thistle-purple" />
+                        <span>Weather Insight</span>
                       </div>
-                      <p className="text-gray-700 text-xs leading-snug">
-                        {item.weatherAdvice}
+                      <p className="text-slate-800 text-xs leading-relaxed font-serif italic">
+                        "{item.weatherAdvice}"
                       </p>
                     </div>
                   )}
                   {item.crowdAdvice && (
-                    <div className="flex flex-col gap-1 p-3 rounded-xl bg-purple-50/50 border border-purple-100">
-                      <div className="flex items-center gap-2 text-[10px] font-black text-purple-600 uppercase tracking-wider">
-                        <Users size={12} />
-                        <span>Crowd Tip</span>
+                    <div className="flex flex-col gap-1 p-4 rounded bg-stone/50 border border-stone-300">
+                      <div className="flex items-center gap-2 text-[10px] font-black text-royal-blue uppercase tracking-widest">
+                        <Users size={12} className="text-thistle-purple" />
+                        <span>Crowd Insight</span>
                       </div>
-                      <p className="text-gray-700 text-xs leading-snug">
-                        {item.crowdAdvice}
+                      <p className="text-slate-800 text-xs leading-relaxed font-serif italic">
+                        "{item.crowdAdvice}"
                       </p>
                     </div>
                   )}

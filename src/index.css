@@ -1,15 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+
+  /* Edinburgh Palette */
+  --royal-blue: #1b365d;
+  --thistle-purple: #7d5a94;
+  --slate-grey: #4a5568;
+  --moss-green: #4a5d4e;
+  --stone: #f2f2f2;
+  --gold: #c5a059;
+  
+  --primary: var(--royal-blue);
+  --secondary: var(--thistle-purple);
+  --accent: var(--gold);
+}
+
+@theme {
+  --font-serif: "Crimson Pro", serif;
+  --color-royal-blue: #1b365d;
+  --color-thistle-purple: #7d5a94;
+  --color-moss-green: #4a5d4e;
+  --color-stone: #f2f2f2;
+  --color-gold: #c5a059;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--stone);
+  color: var(--royal-blue);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Crimson Pro', serif;
 }
 
 /* Leaflet map styles fix */
