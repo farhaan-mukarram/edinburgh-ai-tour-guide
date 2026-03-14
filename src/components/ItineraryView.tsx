@@ -8,12 +8,19 @@ interface ItineraryViewProps {
 }
 
 export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
+  const formatDuration = (mins: number) => {
+    if (mins < 60) return `${mins} mins`;
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return m > 0 ? `${h}h ${m}m` : `${h}h`;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100">
         <div className="flex items-center gap-2 text-blue-700">
           <Clock size={18} />
-          <span className="font-semibold text-sm">~{tour.totalDurationMin} mins total</span>
+          <span className="font-semibold text-sm">~{formatDuration(tour.totalDurationMin)} total</span>
         </div>
         <div className="flex items-center gap-2 text-blue-700">
           <MapIcon size={18} />
@@ -42,6 +49,10 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
                   {item.location.name}
                   <ChevronRight size={16} className="text-gray-300" />
                 </h3>
+                <div className="flex items-center gap-1.5 text-xs font-medium text-blue-600 mb-2">
+                  <Clock size={14} />
+                  <span>{formatDuration(item.estimatedTimeMin)}</span>
+                </div>
                 <p className="text-gray-500 text-sm mb-3">{item.location.description}</p>
                 
                 <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-xl border border-amber-100 relative overflow-hidden group">

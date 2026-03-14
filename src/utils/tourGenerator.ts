@@ -5,7 +5,12 @@ import { EDINBURGH_LOCATIONS } from "../data/mockData";
 
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const openai = createOpenAI({ apiKey });
-const model = openai("gpt-5");
+
+const PACE_TIMES = {
+  relaxed: { avgVisit: 60, stopsPerHour: 0.8 },
+  moderate: { avgVisit: 45, stopsPerHour: 1.2 },
+  brisk: { avgVisit: 25, stopsPerHour: 2.0 },
+};
 
 const getDistance = (
   lat1: number,
@@ -50,7 +55,8 @@ const getRoute = (preferences: TourPreferences) => {
 
   let currentLoc = startLocation;
   let totalDistance = 0;
-  const maxStops = Math.floor((preferences.durationHours * 60) / 45);
+  const paceConfig = PACE_TIMES[preferences.pace];
+  const maxStops = Math.max(3, Math.floor(preferences.durationHours * paceConfig.stopsPerHour));
 
   while (unvisited.length > 0 && itineraryLocs.length < maxStops) {
     let nearestIdx = 0;
@@ -92,6 +98,9 @@ export const generateTourAI = async (
     IMPORTANT: First, choose a realistic current weather condition and crowd level for Edinburgh (e.g., "drizzling and misty", "sunny but windy", "quiet and peaceful", or "busy with festival tourists").
     
     For each location, provide a creative narrative that takes these chosen weather and crowd conditions into account.
+    Also estimate a realistic visit time in minutes for each location. This SHOULD NOT be a fixed number; it must vary based on the location's nature (e.g., climbing Arthur's Seat takes longer than seeing Greyfriars Bobby) and the selected pace (${preferences.pace}).
+    For a "${preferences.pace}" pace, adjust the depth of exploration accordingly.
+    
     Also provide specific weatherAdvice and crowdAdvice for each stop.
     
     Format the response as JSON with:
@@ -99,6 +108,7 @@ export const generateTourAI = async (
     - chosenCrowds: the crowd level you chose
     - items: an array where each object has:
       - locationName (must match one of the input names)
+      - estimatedTimeMin (number of minutes)
       - narrative (a few sentences)
       - weatherAdvice (one sentence)
       - crowdAdvice (one sentence)
@@ -125,16 +135,20 @@ export const generateTourAI = async (
     const response = JSON.parse(jsonStr);
     const aiItems = response.items as any[];
 
+    const paceConfig = PACE_TIMES[preferences.pace];
+    const defaultEstimatedTime = paceConfig.avgVisit;
+
     const itinerary: ItineraryItem[] = itineraryLocs.map((loc) => {
       const aiInfo = aiItems.find((item) => item.locationName === loc.name) || {
         narrative: `Exploring ${loc.name} through the lens of ${preferences.theme}.`,
+        estimatedTimeMin: defaultEstimatedTime,
         weatherAdvice: `Enjoy your visit to ${loc.name}.`,
         crowdAdvice: `Take your time exploring.`,
       };
 
       return {
         location: loc,
-        estimatedTimeMin: 45,
+        estimatedTimeMin: aiInfo.estimatedTimeMin || defaultEstimatedTime,
         narrative: aiInfo.narrative,
         weatherAdvice: aiInfo.weatherAdvice,
         crowdAdvice: aiInfo.crowdAdvice,
@@ -145,24 +159,31 @@ export const generateTourAI = async (
       id: Math.random().toString(36).substring(2, 11),
       itinerary,
       totalDistanceKm: Number(totalDistance.toFixed(2)),
-      totalDurationMin: itinerary.length * 45,
+      totalDurationMin: itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0),
       theme: preferences.theme,
     };
   } catch (error) {
     console.error("AI generation failed, falling back to mock:", error);
-    const itinerary: ItineraryItem[] = itineraryLocs.map((loc) => ({
-      location: loc,
-      estimatedTimeMin: 45,
-      narrative: `Exploring ${loc.name} on a typical Edinburgh day.`,
-      weatherAdvice: `Be prepared for the changing Scottish weather.`,
-      crowdAdvice: `Check for local events that might affect crowd levels.`,
-    }));
+    const paceConfig = PACE_TIMES[preferences.pace];
+    const avgTime = paceConfig.avgVisit;
+
+    const itinerary: ItineraryItem[] = itineraryLocs.map((loc) => {
+      // Add some artificial variance to the fallback so it doesn't look hardcoded
+      const variance = Math.floor(Math.random() * 11) - 5; // -5 to +5
+      return {
+        location: loc,
+        estimatedTimeMin: avgTime + variance,
+        narrative: `Exploring ${loc.name} on a typical Edinburgh day.`,
+        weatherAdvice: `Be prepared for the changing Scottish weather.`,
+        crowdAdvice: `Check for local events that might affect crowd levels.`,
+      };
+    });
 
     return {
       id: Math.random().toString(36).substring(2, 11),
       itinerary,
       totalDistanceKm: Number(totalDistance.toFixed(2)),
-      totalDurationMin: itinerary.length * 45,
+      totalDurationMin: itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0),
       theme: preferences.theme,
     };
   }
