@@ -30,17 +30,23 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
         </div>
 
         {(tour.chosenWeather || tour.chosenCrowds) && (
-          <div className="flex items-center justify-between bg-stone p-4 rounded-lg border border-stone-300 shadow-sm">
+          <div className="flex items-center justify-between bg-stone-100 p-5 rounded-xl border border-royal-blue/10 shadow-sm">
             {tour.chosenWeather && (
-              <div className="flex items-center gap-2 text-royal-blue">
-                <Cloud size={18} className="text-thistle-purple" />
-                <span className="font-bold text-sm uppercase tracking-wider">{tour.chosenWeather}</span>
+              <div className="flex items-center gap-3 text-royal-blue">
+                <Cloud size={20} className="text-thistle-purple" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-royal-blue/50">Current Weather</span>
+                  <span className="font-bold text-sm uppercase tracking-wider">{tour.chosenWeather}</span>
+                </div>
               </div>
             )}
             {tour.chosenCrowds && (
-              <div className="flex items-center gap-2 text-royal-blue">
-                <Users size={18} className="text-thistle-purple" />
-                <span className="font-bold text-sm uppercase tracking-wider">{tour.chosenCrowds}</span>
+              <div className="flex items-center gap-3 text-royal-blue text-right">
+                <div className="flex flex-col items-end">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-royal-blue/50">Crowd Level</span>
+                  <span className="font-bold text-sm uppercase tracking-wider">{tour.chosenCrowds}</span>
+                </div>
+                <Users size={20} className="text-thistle-purple" />
               </div>
             )}
           </div>
@@ -75,24 +81,24 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {item.weatherAdvice && (
-                    <div className="flex flex-col gap-1 p-4 rounded bg-stone/50 border border-stone-300">
-                      <div className="flex items-center gap-2 text-[10px] font-black text-royal-blue uppercase tracking-widest">
-                        <Cloud size={12} className="text-thistle-purple" />
+                    <div className="flex flex-col gap-2 p-4 rounded-lg bg-royal-blue/5 border border-royal-blue/10 shadow-sm">
+                      <div className="flex items-center gap-2 text-xs font-bold text-royal-blue uppercase tracking-wider">
+                        <Cloud size={14} className="text-thistle-purple" />
                         <span>Weather Insight</span>
                       </div>
-                      <p className="text-slate-800 text-xs leading-relaxed font-serif italic">
-                        "{item.weatherAdvice}"
+                      <p className="text-slate-800 text-sm leading-relaxed font-medium">
+                        {item.weatherAdvice}
                       </p>
                     </div>
                   )}
                   {item.crowdAdvice && (
-                    <div className="flex flex-col gap-1 p-4 rounded bg-stone/50 border border-stone-300">
-                      <div className="flex items-center gap-2 text-[10px] font-black text-royal-blue uppercase tracking-widest">
-                        <Users size={12} className="text-thistle-purple" />
+                    <div className="flex flex-col gap-2 p-4 rounded-lg bg-royal-blue/5 border border-royal-blue/10 shadow-sm">
+                      <div className="flex items-center gap-2 text-xs font-bold text-royal-blue uppercase tracking-wider">
+                        <Users size={14} className="text-thistle-purple" />
                         <span>Crowd Insight</span>
                       </div>
-                      <p className="text-slate-800 text-xs leading-relaxed font-serif italic">
-                        "{item.crowdAdvice}"
+                      <p className="text-slate-800 text-sm leading-relaxed font-medium">
+                        {item.crowdAdvice}
                       </p>
                     </div>
                   )}
