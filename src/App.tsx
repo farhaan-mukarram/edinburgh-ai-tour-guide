@@ -5,7 +5,7 @@ import { ItineraryView } from "./components/ItineraryView";
 import { About } from "./components/About";
 import type { Tour, TourPreferences } from "./types";
 import { generateTourAI } from "./utils/tourGenerator";
-import { Sparkles, Compass, History, Info } from "lucide-react";
+import { Sparkles, Compass, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function App() {
@@ -59,13 +59,6 @@ function App() {
             >
               About
             </button>
-            <a
-              href="#"
-              className="hover:text-blue-600 transition-colors flex items-center gap-1"
-            >
-              <History size={16} />
-              Recent
-            </a>
           </nav>
         </div>
       </header>
