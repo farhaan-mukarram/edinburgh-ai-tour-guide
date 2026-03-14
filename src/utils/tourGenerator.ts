@@ -56,7 +56,7 @@ const getRoute = (preferences: TourPreferences) => {
   let currentLoc = startLocation;
   let totalDistance = 0;
   const paceConfig = PACE_TIMES[preferences.pace];
-  const maxStops = Math.max(3, Math.floor(preferences.durationHours * paceConfig.stopsPerHour));
+  const maxStops = Math.max(3, Math.floor((preferences.durationHours * 60) / (paceConfig.avgVisit + 15)));
 
   while (unvisited.length > 0 && itineraryLocs.length < maxStops) {
     let nearestIdx = 0;
@@ -93,12 +93,16 @@ export const generateTourAI = async (
     Generate a personalized Edinburgh walking tour based on the following:
     Theme: ${preferences.theme}
     Locations: ${itineraryLocs.map((l) => l.name).join(", ")}
+    Total Walking Distance: ${totalDistance.toFixed(2)} km
+    Requested Duration: ${preferences.durationHours} hours
     Pace: ${preferences.pace}
 
     IMPORTANT: First, choose a realistic current weather condition and crowd level for Edinburgh (e.g., "drizzling and misty", "sunny but windy", "quiet and peaceful", or "busy with festival tourists").
     
-    For each location, estimate a realistic visit time in minutes. This SHOULD NOT be a fixed number; it must vary based on the location's nature (e.g., climbing Arthur's Seat takes longer than seeing Greyfriars Bobby) and the selected pace (${preferences.pace}).
-    For a "${preferences.pace}" pace, adjust the depth of exploration accordingly.
+    CRITICAL: The entire tour, including the time spent at each location AND the time taken to walk the ${totalDistance.toFixed(2)} km distance, MUST fit within the ${preferences.durationHours} hour limit.
+    - Assume a walking speed based on the "${preferences.pace}" pace (e.g., 3-5 km/h).
+    - For each location, estimate a realistic visit time in minutes that reflects both the location's nature and the remaining time available in the ${preferences.durationHours} hour schedule.
+    - The sum of all "estimatedTimeMin" plus walking time must be approximately ${preferences.durationHours * 60} minutes.
     
     Also provide specific weatherAdvice and crowdAdvice for each stop. These should be short, practical, and easy to read (max 10-12 words).
     
@@ -136,6 +140,10 @@ export const generateTourAI = async (
     const paceConfig = PACE_TIMES[preferences.pace];
     const defaultEstimatedTime = paceConfig.avgVisit;
 
+    const paceSpeeds = { relaxed: 3, moderate: 4.5, brisk: 6 };
+    const walkingSpeed = paceSpeeds[preferences.pace];
+    const walkingTimeMin = (totalDistance / walkingSpeed) * 60;
+
     const itinerary: ItineraryItem[] = itineraryLocs.map((loc) => {
       const aiInfo = aiItems.find((item) => item.locationName === loc.name) || {
         estimatedTimeMin: defaultEstimatedTime,
@@ -155,7 +163,7 @@ export const generateTourAI = async (
       id: Math.random().toString(36).substring(2, 11),
       itinerary,
       totalDistanceKm: Number(totalDistance.toFixed(2)),
-      totalDurationMin: itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0),
+      totalDurationMin: Math.round(itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0) + walkingTimeMin),
       theme: preferences.theme,
       chosenWeather: response.chosenWeather,
       chosenCrowds: response.chosenCrowds,
@@ -163,14 +171,21 @@ export const generateTourAI = async (
   } catch (error) {
     console.error("AI generation failed, falling back to mock:", error);
     const paceConfig = PACE_TIMES[preferences.pace];
-    const avgTime = paceConfig.avgVisit;
+    
+    // Estimate walking speeds based on pace
+    const paceSpeeds = { relaxed: 3, moderate: 4.5, brisk: 6 };
+    const walkingSpeed = paceSpeeds[preferences.pace];
+    const walkingTimeMin = (totalDistance / walkingSpeed) * 60;
+    
+    const availableVisitTimeMin = (preferences.durationHours * 60) - walkingTimeMin;
+    const avgVisitTime = Math.max(15, availableVisitTimeMin / itineraryLocs.length);
 
     const itinerary: ItineraryItem[] = itineraryLocs.map((loc) => {
-      // Add some artificial variance to the fallback so it doesn't look hardcoded
+      // Add some artificial variance to the fallback
       const variance = Math.floor(Math.random() * 11) - 5; // -5 to +5
       return {
         location: loc,
-        estimatedTimeMin: avgTime + variance,
+        estimatedTimeMin: Math.round(avgVisitTime + variance),
         weatherAdvice: `Be prepared for the changing Scottish weather.`,
         crowdAdvice: `Check for local events that might affect crowd levels.`,
       };
@@ -180,7 +195,7 @@ export const generateTourAI = async (
       id: Math.random().toString(36).substring(2, 11),
       itinerary,
       totalDistanceKm: Number(totalDistance.toFixed(2)),
-      totalDurationMin: itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0),
+      totalDurationMin: Math.round(itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0) + walkingTimeMin),
       theme: preferences.theme,
       chosenWeather: "Changing Scottish skies",
       chosenCrowds: "Typical city bustle",
