@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Tour } from '../types';
-import { Clock, Map as MapIcon, ChevronRight, Cloud, Users } from 'lucide-react';
+import { Clock, Map as MapIcon, Cloud, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface ItineraryViewProps {

@@ -170,7 +170,6 @@ export const generateTourAI = async (
     };
   } catch (error) {
     console.error("AI generation failed, falling back to mock:", error);
-    const paceConfig = PACE_TIMES[preferences.pace];
     
     // Estimate walking speeds based on pace
     const paceSpeeds = { relaxed: 3, moderate: 4.5, brisk: 6 };
