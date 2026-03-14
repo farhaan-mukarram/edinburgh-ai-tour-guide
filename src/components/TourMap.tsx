@@ -36,7 +36,7 @@ export const TourMap: React.FC<TourMapProps> = ({ tour }) => {
   const positions = tour.itinerary.map(item => [item.location.lat, item.location.lng] as [number, number]);
 
   return (
-    <div className="h-[400px] w-full rounded-2xl overflow-hidden shadow-inner border border-gray-200">
+    <div className="h-full w-full lg:rounded-none overflow-hidden lg:shadow-none lg:border-none">
       <MapContainer
         center={[55.9486, -3.1999]}
         zoom={14}
