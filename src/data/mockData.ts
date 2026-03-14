@@ -1,12 +1,60 @@
-import type { Location, Theme } from '../types';
+import type { Location, ThemeDetail } from '../types';
 
-export const THEMES: { id: Theme; label: string; description: string; emoji: string }[] = [
-  { id: 'history', label: 'Royal Mile History', description: 'Explore the historic heart of the Old Town.', emoji: '🏰' },
-  { id: 'ghosts', label: 'Dark Deeds & Ghosts', description: 'Hear the spooky tales of Edinburgh\'s past.', emoji: '👻' },
-  { id: 'harry_potter', label: 'Wizarding Wonders', description: 'Visit the spots that inspired J.K. Rowling.', emoji: '🪄' },
-  { id: 'nature', label: 'Parks & Peaks', description: 'Climb Arthur\'s Seat and visit the Meadows.', emoji: '⛰️' },
-  { id: 'food', label: 'Foodie Trail', description: 'Sample the best haggis, shortbread, and whisky.', emoji: '🥘' },
-  { id: 'literature', label: 'Literary Legends', description: 'Follow in the footsteps of Scott, Burns, and Stevenson.', emoji: '📚' },
+export const THEMES: ThemeDetail[] = [
+  { 
+    id: 'history', 
+    label: 'Royal Mile History', 
+    description: 'Explore the historic heart of the Old Town, from the Castle to the Palace.', 
+    emoji: '🏰',
+    highlights: ['Medieval Architecture', 'Royal History', 'Closes & Wynds'],
+    duration: '2-3 Hours',
+    bestTime: 'Early Morning'
+  },
+  { 
+    id: 'ghosts', 
+    label: 'Dark Deeds & Ghosts', 
+    description: 'Hear the spooky tales of Edinburgh\'s past in the city\'s most haunted spots.', 
+    emoji: '👻',
+    highlights: ['Greyfriars Kirkyard', 'Underground Vaults', 'Executions History'],
+    duration: '1.5-2 Hours',
+    bestTime: 'After Sunset'
+  },
+  { 
+    id: 'harry_potter', 
+    label: 'Wizarding Wonders', 
+    description: 'Visit the spots that inspired J.K. Rowling and see where the magic began.', 
+    emoji: '🪄',
+    highlights: ['Victoria Street (Diagon Alley)', 'The Elephant House', 'Greyfriars Names'],
+    duration: '1.5-2 Hours',
+    bestTime: 'Anytime'
+  },
+  { 
+    id: 'nature', 
+    label: 'Parks & Peaks', 
+    description: 'Escape the city bustle and climb Arthur\'s Seat for panoramic views.', 
+    emoji: '⛰️',
+    highlights: ['Arthur\'s Seat Summit', 'Holyrood Park', 'The Meadows'],
+    duration: '2-4 Hours',
+    bestTime: 'Sunrise or Sunset'
+  },
+  { 
+    id: 'food', 
+    label: 'Foodie Trail', 
+    description: 'Sample the best traditional Scottish fare and modern culinary delights.', 
+    emoji: '🥘',
+    highlights: ['Traditional Haggis', 'Scottish Shortbread', 'Whisky Tasting'],
+    duration: '2-3 Hours',
+    bestTime: 'Lunchtime'
+  },
+  { 
+    id: 'literature', 
+    label: 'Literary Legends', 
+    description: 'Follow in the footsteps of Scott, Burns, and Stevenson in the UNESCO City of Literature.', 
+    emoji: '📚',
+    highlights: ['Scott Monument', 'Writers\' Museum', 'Makar\'s Court'],
+    duration: '2 Hours',
+    bestTime: 'Afternoon'
+  },
 ];
 
 export const EDINBURGH_LOCATIONS: Location[] = [
