@@ -1,30 +1,37 @@
-import React from 'react';
-import { TourForm } from './components/TourForm';
-import { TourMap } from './components/TourMap';
-import { ItineraryView } from './components/ItineraryView';
-import { About } from './components/About';
-import type { Tour, TourPreferences } from './types';
-import { generateTour } from './utils/tourGenerator';
-import { Sparkles, Compass, History, Info } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from "react";
+import { TourForm } from "./components/TourForm";
+import { TourMap } from "./components/TourMap";
+import { ItineraryView } from "./components/ItineraryView";
+import { About } from "./components/About";
+import type { Tour, TourPreferences } from "./types";
+import { generateTourAI } from "./utils/tourGenerator";
+import { Sparkles, Compass, History, Info } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 function App() {
-  const [view, setView] = React.useState<'home' | 'about'>('home');
+  const [view, setView] = React.useState<"home" | "about">("home");
   const [tour, setTour] = React.useState<Tour | null>(null);
   const [isGenerating, setIsGenerating] = React.useState(false);
 
-  const handleGenerate = (prefs: TourPreferences) => {
-    setView('home');
+  const handleGenerate = async (prefs: TourPreferences) => {
+    setView("home");
     setIsGenerating(true);
-    // Simulate AI generation time
-    setTimeout(() => {
-      const newTour = generateTour(prefs);
+
+    try {
+      const newTour = await generateTourAI(prefs);
       setTour(newTour);
-      setIsGenerating(false);
-      
+
       // Scroll to results
-      document.getElementById('tour-results')?.scrollIntoView({ behavior: 'smooth' });
-    }, 1500);
+      setTimeout(() => {
+        document
+          .getElementById("tour-results")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } catch (error) {
+      console.error("Failed to generate tour:", error);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -41,19 +48,22 @@ function App() {
             </h1>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-            <button 
-              onClick={() => setView('home')} 
-              className={`hover:text-blue-600 transition-colors ${view === 'home' ? 'text-blue-600 font-bold' : ''}`}
+            <button
+              onClick={() => setView("home")}
+              className={`hover:text-blue-600 transition-colors ${view === "home" ? "text-blue-600 font-bold" : ""}`}
             >
               Tours
             </button>
-            <button 
-              onClick={() => setView('about')} 
-              className={`hover:text-blue-600 transition-colors ${view === 'about' ? 'text-blue-600 font-bold' : ''}`}
+            <button
+              onClick={() => setView("about")}
+              className={`hover:text-blue-600 transition-colors ${view === "about" ? "text-blue-600 font-bold" : ""}`}
             >
               About
             </button>
-            <a href="#" className="hover:text-blue-600 transition-colors flex items-center gap-1">
+            <a
+              href="#"
+              className="hover:text-blue-600 transition-colors flex items-center gap-1"
+            >
               <History size={16} />
               Recent
             </a>
@@ -62,7 +72,7 @@ function App() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-        {view === 'about' ? (
+        {view === "about" ? (
           <About />
         ) : (
           <div className="grid lg:grid-cols-12 gap-12 items-start">
@@ -70,10 +80,12 @@ function App() {
             <div className="lg:col-span-5 space-y-8">
               <div className="space-y-4">
                 <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
-                  Discover <span className="text-blue-600">Edinburgh</span> with AI precision.
+                  Discover <span className="text-blue-600">Edinburgh</span> with
+                  AI precision.
                 </h2>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  Choose your vibe, and let our AI craft a personalised walking tour through the historic streets of Scotland's capital.
+                  Choose your vibe, and let our AI craft a personalised walking
+                  tour through the historic streets of Scotland's capital.
                 </p>
               </div>
 
@@ -82,13 +94,17 @@ function App() {
               <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 flex gap-3 items-start">
                 <Info className="text-blue-500 shrink-0 mt-0.5" size={20} />
                 <p className="text-sm text-blue-800 italic">
-                  Our AI considers current events, historical significance, and local secrets to build your unique itinerary.
+                  Our AI considers current events, historical significance, and
+                  local secrets to build your unique itinerary.
                 </p>
               </div>
             </div>
 
             {/* Right Column - Results */}
-            <div className="lg:col-span-7 space-y-8 min-h-[600px]" id="tour-results">
+            <div
+              className="lg:col-span-7 space-y-8 min-h-[600px]"
+              id="tour-results"
+            >
               <AnimatePresence mode="wait">
                 {isGenerating ? (
                   <motion.div
@@ -100,11 +116,18 @@ function App() {
                   >
                     <div className="relative">
                       <div className="w-20 h-20 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin" />
-                      <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-600 animate-pulse" size={32} />
+                      <Sparkles
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-600 animate-pulse"
+                        size={32}
+                      />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold">Crafting your story...</h3>
-                      <p className="text-slate-500 mt-2">Connecting history, lore, and secret paths.</p>
+                      <h3 className="text-2xl font-bold">
+                        Crafting your story...
+                      </h3>
+                      <p className="text-slate-500 mt-2">
+                        Connecting history, lore, and secret paths.
+                      </p>
                     </div>
                   </motion.div>
                 ) : tour ? (
@@ -119,9 +142,11 @@ function App() {
                       <div className="p-8">
                         <div className="flex items-center gap-3 mb-6">
                           <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">
-                            {tour.theme.replace('_', ' ')}
+                            {tour.theme.replace("_", " ")}
                           </span>
-                          <h3 className="text-2xl font-black">Your Custom Itinerary</h3>
+                          <h3 className="text-2xl font-black">
+                            Your Custom Itinerary
+                          </h3>
                         </div>
                         <ItineraryView tour={tour} />
                       </div>
@@ -141,8 +166,13 @@ function App() {
                     <div className="bg-white p-6 rounded-full shadow-sm mb-6">
                       <Compass size={64} className="text-slate-200" />
                     </div>
-                    <h3 className="text-xl font-semibold text-slate-600">No tour generated yet</h3>
-                    <p className="max-w-xs mt-2">Fill out the form to start your personalised adventure in Edinburgh.</p>
+                    <h3 className="text-xl font-semibold text-slate-600">
+                      No tour generated yet
+                    </h3>
+                    <p className="max-w-xs mt-2">
+                      Fill out the form to start your personalised adventure in
+                      Edinburgh.
+                    </p>
                   </div>
                 )}
               </AnimatePresence>

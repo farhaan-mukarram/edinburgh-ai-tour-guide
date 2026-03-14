@@ -30,6 +30,8 @@ export interface ItineraryItem {
   location: Location;
   estimatedTimeMin: number;
   narrative: string;
+  weatherAdvice?: string;
+  crowdAdvice?: string;
 }
 
 export interface Tour {

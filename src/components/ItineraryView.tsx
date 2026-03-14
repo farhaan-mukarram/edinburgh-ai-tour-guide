@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Tour } from '../types';
-import { Clock, Map as MapIcon, ChevronRight } from 'lucide-react';
+import { Clock, Map as MapIcon, ChevronRight, Cloud, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface ItineraryViewProps {
@@ -48,9 +48,24 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
                   <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:scale-110 transition-transform">
                     <span className="text-4xl italic font-serif">"</span>
                   </div>
-                  <p className="text-gray-700 text-sm leading-relaxed relative italic">
+                  <p className="text-gray-700 text-sm leading-relaxed relative italic mb-3">
                     {item.narrative}
                   </p>
+                  
+                  <div className="flex flex-wrap gap-4 mt-2 pt-2 border-t border-amber-100">
+                    {item.weatherAdvice && (
+                      <div className="flex items-center gap-2 text-[11px] font-bold text-amber-700 uppercase tracking-tighter">
+                        <Cloud size={14} className="text-amber-500" />
+                        <span>Weather: {item.weatherAdvice}</span>
+                      </div>
+                    )}
+                    {item.crowdAdvice && (
+                      <div className="flex items-center gap-2 text-[11px] font-bold text-amber-700 uppercase tracking-tighter">
+                        <Users size={14} className="text-amber-500" />
+                        <span>Crowds: {item.crowdAdvice}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>
