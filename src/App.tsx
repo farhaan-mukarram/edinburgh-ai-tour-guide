@@ -3,17 +3,20 @@ import { TourForm } from "./components/TourForm";
 import { TourMap } from "./components/TourMap";
 import { ItineraryView } from "./components/ItineraryView";
 import { About } from "./components/About";
+import { LoadingScreen } from "./components/LoadingScreen";
 import type { Tour, TourPreferences } from "./types";
 import { generateTourAI } from "./utils/tourGenerator";
-import { Sparkles, Compass, Info } from "lucide-react";
+import { Compass, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function App() {
   const [view, setView] = React.useState<"form" | "about" | "result">("form");
   const [tour, setTour] = React.useState<Tour | null>(null);
   const [isGenerating, setIsGenerating] = React.useState(false);
+  const [lastPrefs, setLastPrefs] = React.useState<TourPreferences | null>(null);
 
   const handleGenerate = async (prefs: TourPreferences) => {
+    setLastPrefs(prefs);
     setIsGenerating(true);
     setView("form"); // Keep form view for loading overlay if needed, or switch to loading
 
@@ -98,21 +101,7 @@ function App() {
                 <TourForm onGenerate={handleGenerate} />
                 
                 {isGenerating && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="absolute inset-0 bg-stone/90 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center text-center p-8 z-10 border-2 border-royal-blue/10"
-                  >
-                    <div className="relative mb-6">
-                      <div className="w-20 h-20 border-4 border-royal-blue/10 border-t-royal-blue rounded-full animate-spin" />
-                      <Sparkles
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-royal-blue animate-pulse"
-                        size={32}
-                      />
-                    </div>
-                    <h3 className="text-3xl font-serif font-bold text-royal-blue">Crafting your itinerary...</h3>
-                    <p className="text-slate-600 mt-2 font-medium">Connecting history, lore, and secret paths.</p>
-                  </motion.div>
+                  <LoadingScreen theme={lastPrefs?.theme || 'history'} />
                 )}
               </div>
 
