@@ -101,11 +101,11 @@ export const generateTourAI = async (
     Also estimate a realistic visit time in minutes for each location. This SHOULD NOT be a fixed number; it must vary based on the location's nature (e.g., climbing Arthur's Seat takes longer than seeing Greyfriars Bobby) and the selected pace (${preferences.pace}).
     For a "${preferences.pace}" pace, adjust the depth of exploration accordingly.
     
-    Also provide specific weatherAdvice and crowdAdvice for each stop.
+    Also provide specific weatherAdvice and crowdAdvice for each stop. These should be short, practical, and easy to read (max 10-12 words).
     
     Format the response as JSON with:
-    - chosenWeather: a brief description of the weather you chose
-    - chosenCrowds: the crowd level you chose
+    - chosenWeather: a brief description of the weather you chose (max 6 words)
+    - chosenCrowds: the crowd level you chose (max 6 words)
     - items: an array where each object has:
       - locationName (must match one of the input names)
       - estimatedTimeMin (number of minutes)
@@ -161,6 +161,8 @@ export const generateTourAI = async (
       totalDistanceKm: Number(totalDistance.toFixed(2)),
       totalDurationMin: itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0),
       theme: preferences.theme,
+      chosenWeather: response.chosenWeather,
+      chosenCrowds: response.chosenCrowds,
     };
   } catch (error) {
     console.error("AI generation failed, falling back to mock:", error);
@@ -185,6 +187,8 @@ export const generateTourAI = async (
       totalDistanceKm: Number(totalDistance.toFixed(2)),
       totalDurationMin: itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0),
       theme: preferences.theme,
+      chosenWeather: "Changing Scottish skies",
+      chosenCrowds: "Typical city bustle",
     };
   }
 };

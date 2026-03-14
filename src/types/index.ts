@@ -40,4 +40,6 @@ export interface Tour {
   totalDistanceKm: number;
   totalDurationMin: number;
   theme: Theme;
+  chosenWeather?: string;
+  chosenCrowds?: string;
 }

@@ -17,15 +17,34 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100">
-        <div className="flex items-center gap-2 text-blue-700">
-          <Clock size={18} />
-          <span className="font-semibold text-sm">~{formatDuration(tour.totalDurationMin)} total</span>
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-sm">
+          <div className="flex items-center gap-2 text-blue-700">
+            <Clock size={18} />
+            <span className="font-semibold text-sm">~{formatDuration(tour.totalDurationMin)} total</span>
+          </div>
+          <div className="flex items-center gap-2 text-blue-700">
+            <MapIcon size={18} />
+            <span className="font-semibold text-sm">{tour.totalDistanceKm} km walk</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2 text-blue-700">
-          <MapIcon size={18} />
-          <span className="font-semibold text-sm">{tour.totalDistanceKm} km walk</span>
-        </div>
+
+        {(tour.chosenWeather || tour.chosenCrowds) && (
+          <div className="flex items-center justify-between bg-indigo-50 p-4 rounded-xl border border-indigo-100 shadow-sm">
+            {tour.chosenWeather && (
+              <div className="flex items-center gap-2 text-indigo-700">
+                <Cloud size={18} className="text-indigo-500" />
+                <span className="font-semibold text-sm capitalize">{tour.chosenWeather}</span>
+              </div>
+            )}
+            {tour.chosenCrowds && (
+              <div className="flex items-center gap-2 text-indigo-700">
+                <Users size={18} className="text-indigo-500" />
+                <span className="font-semibold text-sm capitalize">{tour.chosenCrowds}</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="relative">
@@ -63,17 +82,27 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
                     {item.narrative}
                   </p>
                   
-                  <div className="flex flex-wrap gap-4 mt-2 pt-2 border-t border-amber-100">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 pt-4 border-t border-amber-100">
                     {item.weatherAdvice && (
-                      <div className="flex items-center gap-2 text-[11px] font-bold text-amber-700 uppercase tracking-tighter">
-                        <Cloud size={14} className="text-amber-500" />
-                        <span>Weather: {item.weatherAdvice}</span>
+                      <div className="flex flex-col gap-1 p-2 rounded-lg bg-blue-50/50 border border-blue-100">
+                        <div className="flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase tracking-wider">
+                          <Cloud size={12} />
+                          <span>Weather Tip</span>
+                        </div>
+                        <p className="text-gray-700 text-xs leading-snug">
+                          {item.weatherAdvice}
+                        </p>
                       </div>
                     )}
                     {item.crowdAdvice && (
-                      <div className="flex items-center gap-2 text-[11px] font-bold text-amber-700 uppercase tracking-tighter">
-                        <Users size={14} className="text-amber-500" />
-                        <span>Crowds: {item.crowdAdvice}</span>
+                      <div className="flex flex-col gap-1 p-2 rounded-lg bg-purple-50/50 border border-purple-100">
+                        <div className="flex items-center gap-2 text-[10px] font-black text-purple-600 uppercase tracking-wider">
+                          <Users size={12} />
+                          <span>Crowd Tip</span>
+                        </div>
+                        <p className="text-gray-700 text-xs leading-snug">
+                          {item.crowdAdvice}
+                        </p>
                       </div>
                     )}
                   </div>
