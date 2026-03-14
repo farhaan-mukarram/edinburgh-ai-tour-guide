@@ -97,8 +97,7 @@ export const generateTourAI = async (
 
     IMPORTANT: First, choose a realistic current weather condition and crowd level for Edinburgh (e.g., "drizzling and misty", "sunny but windy", "quiet and peaceful", or "busy with festival tourists").
     
-    For each location, provide a creative narrative that takes these chosen weather and crowd conditions into account.
-    Also estimate a realistic visit time in minutes for each location. This SHOULD NOT be a fixed number; it must vary based on the location's nature (e.g., climbing Arthur's Seat takes longer than seeing Greyfriars Bobby) and the selected pace (${preferences.pace}).
+    For each location, estimate a realistic visit time in minutes. This SHOULD NOT be a fixed number; it must vary based on the location's nature (e.g., climbing Arthur's Seat takes longer than seeing Greyfriars Bobby) and the selected pace (${preferences.pace}).
     For a "${preferences.pace}" pace, adjust the depth of exploration accordingly.
     
     Also provide specific weatherAdvice and crowdAdvice for each stop. These should be short, practical, and easy to read (max 10-12 words).
@@ -109,7 +108,6 @@ export const generateTourAI = async (
     - items: an array where each object has:
       - locationName (must match one of the input names)
       - estimatedTimeMin (number of minutes)
-      - narrative (a few sentences)
       - weatherAdvice (one sentence)
       - crowdAdvice (one sentence)
   `;
@@ -140,7 +138,6 @@ export const generateTourAI = async (
 
     const itinerary: ItineraryItem[] = itineraryLocs.map((loc) => {
       const aiInfo = aiItems.find((item) => item.locationName === loc.name) || {
-        narrative: `Exploring ${loc.name} through the lens of ${preferences.theme}.`,
         estimatedTimeMin: defaultEstimatedTime,
         weatherAdvice: `Enjoy your visit to ${loc.name}.`,
         crowdAdvice: `Take your time exploring.`,
@@ -149,7 +146,6 @@ export const generateTourAI = async (
       return {
         location: loc,
         estimatedTimeMin: aiInfo.estimatedTimeMin || defaultEstimatedTime,
-        narrative: aiInfo.narrative,
         weatherAdvice: aiInfo.weatherAdvice,
         crowdAdvice: aiInfo.crowdAdvice,
       };
@@ -175,7 +171,6 @@ export const generateTourAI = async (
       return {
         location: loc,
         estimatedTimeMin: avgTime + variance,
-        narrative: `Exploring ${loc.name} on a typical Edinburgh day.`,
         weatherAdvice: `Be prepared for the changing Scottish weather.`,
         crowdAdvice: `Check for local events that might affect crowd levels.`,
       };

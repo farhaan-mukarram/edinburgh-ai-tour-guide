@@ -135,7 +135,9 @@ function App() {
               >
                 {/* Left side: Map - Full height on desktop */}
                 <div className="w-full lg:w-1/2 h-[calc(100vh-73.5px)] lg:h-auto lg:sticky lg:top-[73.5px] z-10 lg:z-0">
-                  <TourMap tour={tour} />
+                  <TourMap 
+                    tour={tour} 
+                  />
                 </div>
 
                 {/* Right side: Itinerary - Scrollable */}
@@ -157,15 +159,6 @@ function App() {
                     </div>
 
                     <ItineraryView tour={tour} />
-
-                    <div className="flex flex-col sm:flex-row gap-4 pt-12 border-t border-slate-100">
-                      <button className="flex-1 py-4 px-6 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all">
-                        Save to Mobile
-                      </button>
-                      <button className="flex-1 py-4 px-6 bg-white text-slate-900 border-2 border-slate-200 rounded-xl font-bold hover:border-slate-300 transition-all">
-                        Share Tour
-                      </button>
-                    </div>
                   </div>
                 </div>
               </motion.div>

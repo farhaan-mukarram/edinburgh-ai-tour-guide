@@ -16,8 +16,20 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
+// Create custom icon to avoid default icon issues
+const customIcon = new L.Icon({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 interface TourMapProps {
   tour: Tour;
+  onRouteFetched?: (distanceKm: number) => void;
 }
 
 // Component to auto-zoom map to show all markers
@@ -33,10 +45,10 @@ const MapBounds: React.FC<{ tour: Tour }> = ({ tour }) => {
 };
 
 export const TourMap: React.FC<TourMapProps> = ({ tour }) => {
-  const positions = tour.itinerary.map(item => [item.location.lat, item.location.lng] as [number, number]);
+  const straightPositions = tour.itinerary.map(item => [item.location.lat, item.location.lng] as [number, number]);
 
   return (
-    <div className="h-full w-full lg:rounded-none overflow-hidden lg:shadow-none lg:border-none">
+    <div className="h-full w-full lg:rounded-none overflow-hidden lg:shadow-none lg:border-none relative">
       <MapContainer
         center={[55.9486, -3.1999]}
         zoom={14}
@@ -48,7 +60,11 @@ export const TourMap: React.FC<TourMapProps> = ({ tour }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {tour.itinerary.map((item, index) => (
-          <Marker key={item.location.id} position={[item.location.lat, item.location.lng]}>
+          <Marker 
+            key={item.location.id} 
+            position={[item.location.lat, item.location.lng]}
+            icon={customIcon}
+          >
             <Popup>
               <div className="font-sans">
                 <div className="font-bold text-blue-600">Stop {index + 1}: {item.location.name}</div>
@@ -57,9 +73,9 @@ export const TourMap: React.FC<TourMapProps> = ({ tour }) => {
             </Popup>
           </Marker>
         ))}
-        {positions.length > 1 && (
+        {straightPositions.length > 1 && (
           <Polyline
-            positions={positions}
+            positions={straightPositions}
             pathOptions={{ color: '#3b82f6', weight: 4, dashArray: '10, 10' }}
           />
         )}

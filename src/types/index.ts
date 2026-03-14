@@ -29,7 +29,6 @@ export interface TourPreferences {
 export interface ItineraryItem {
   location: Location;
   estimatedTimeMin: number;
-  narrative: string;
   weatherAdvice?: string;
   crowdAdvice?: string;
 }
