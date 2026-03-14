@@ -98,7 +98,7 @@ export const About: React.FC = () => {
             <h3 className="text-4xl font-serif font-black uppercase tracking-tight text-stone">Our Methodology</h3>
           </div>
           <p className="text-stone/90 text-xl leading-relaxed font-serif italic">
-            "Our AI engine combines historical data, local insights, and real-time mapping to create a route that fits your schedule and physical pace. Each stop is selected to complement your chosen theme, ensuring a cohesive and immersive story."
+            "Our AI engine combines historical data, local insights, and real-time mapping to create a route that fits your schedule and physical pace. Each stop is selected to complement your chosen theme, ensuring a cohesive and immersive experience."
           </p>
           <div className="flex flex-wrap gap-8 pt-4">
              <div className="flex items-center gap-2">
@@ -107,7 +107,7 @@ export const About: React.FC = () => {
              </div>
              <div className="flex items-center gap-2">
                 <Sparkles size={18} className="text-gold" />
-                <span className="text-sm font-semibold">Unique Narratives</span>
+                <span className="text-sm font-semibold">Smart Pathfinding</span>
              </div>
           </div>
         </div>

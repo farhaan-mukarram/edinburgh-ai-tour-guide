@@ -110,7 +110,7 @@ function App() {
                         size={32}
                       />
                     </div>
-                    <h3 className="text-3xl font-serif font-bold text-royal-blue">Crafting your story...</h3>
+                    <h3 className="text-3xl font-serif font-bold text-royal-blue">Crafting your itinerary...</h3>
                     <p className="text-slate-600 mt-2 font-medium">Connecting history, lore, and secret paths.</p>
                   </motion.div>
                 )}
