@@ -92,12 +92,13 @@ export const generateTourAI = async (
   const prompt = `
     Generate a personalized Edinburgh walking tour based on the following:
     Theme: ${preferences.theme}
+    Date: ${preferences.date}
     Locations: ${itineraryLocs.map((l) => l.name).join(", ")}
     Total Walking Distance: ${totalDistance.toFixed(2)} km
     Requested Duration: ${preferences.durationHours} hours
     Pace: ${preferences.pace}
 
-    IMPORTANT: First, choose a realistic current weather condition and crowd level for Edinburgh (e.g., "drizzling and misty", "sunny but windy", "quiet and peaceful", or "busy with festival tourists").
+    IMPORTANT: First, choose a realistic current weather condition and crowd level for Edinburgh for the specified date (${preferences.date}).
     
     CRITICAL: The entire tour, including the time spent at each location AND the time taken to walk the ${totalDistance.toFixed(2)} km distance, MUST fit within the ${preferences.durationHours} hour limit.
     - Assume a walking speed based on the "${preferences.pace}" pace (e.g., 3-5 km/h).
@@ -165,6 +166,7 @@ export const generateTourAI = async (
       totalDistanceKm: Number(totalDistance.toFixed(2)),
       totalDurationMin: Math.round(itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0) + walkingTimeMin),
       theme: preferences.theme,
+      date: preferences.date,
       chosenWeather: response.chosenWeather,
       chosenCrowds: response.chosenCrowds,
     };
@@ -196,6 +198,7 @@ export const generateTourAI = async (
       totalDistanceKm: Number(totalDistance.toFixed(2)),
       totalDurationMin: Math.round(itinerary.reduce((acc, item) => acc + item.estimatedTimeMin, 0) + walkingTimeMin),
       theme: preferences.theme,
+      date: preferences.date,
       chosenWeather: "Changing Scottish skies",
       chosenCrowds: "Typical city bustle",
     };

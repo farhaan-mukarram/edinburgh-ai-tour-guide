@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { TourPreferences, Theme } from '../types';
 import { THEMES, EDINBURGH_LOCATIONS } from '../data/mockData';
-import { Clock, MapPin, Sparkles, Footprints, ChevronDown, ChevronUp, Star, Sun } from 'lucide-react';
+import { Clock, MapPin, Sparkles, Footprints, ChevronDown, ChevronUp, Star, Sun, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface TourFormProps {
@@ -9,11 +9,17 @@ interface TourFormProps {
 }
 
 export const TourForm: React.FC<TourFormProps> = ({ onGenerate }) => {
+  // Get tomorrow's date as default (YYYY-MM-DD)
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
   const [prefs, setPrefs] = React.useState<TourPreferences>({
     startPoint: EDINBURGH_LOCATIONS[0].id,
     theme: 'history',
     durationHours: 2,
     pace: 'moderate',
+    date: tomorrowStr,
   });
 
   const [expandedTheme, setExpandedTheme] = useState<Theme | null>(null);
@@ -134,7 +140,21 @@ export const TourForm: React.FC<TourFormProps> = ({ onGenerate }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-bold text-royal-blue uppercase tracking-wider">
+            <Calendar size={18} className="text-thistle-purple" />
+            Tour Date
+          </label>
+          <input
+            type="date"
+            min={tomorrowStr}
+            value={prefs.date}
+            onChange={(e) => setPrefs({ ...prefs, date: e.target.value })}
+            className="w-full p-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-royal-blue focus:border-transparent outline-none transition-all font-serif text-lg bg-stone/20 cursor-pointer"
+          />
+        </div>
+
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-bold text-royal-blue uppercase tracking-wider">
             <Clock size={18} className="text-thistle-purple" />
@@ -143,7 +163,7 @@ export const TourForm: React.FC<TourFormProps> = ({ onGenerate }) => {
           <select
             value={prefs.durationHours}
             onChange={(e) => setPrefs({ ...prefs, durationHours: Number(e.target.value) })}
-            className="w-full p-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-royal-blue focus:border-transparent outline-none transition-all font-serif text-lg bg-stone/20"
+            className="w-full p-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-royal-blue focus:border-transparent outline-none transition-all font-serif text-lg bg-stone/20 cursor-pointer"
           >
             {[1, 2, 3, 4, 6].map((h) => (
               <option key={h} value={h}>
@@ -152,22 +172,22 @@ export const TourForm: React.FC<TourFormProps> = ({ onGenerate }) => {
             ))}
           </select>
         </div>
+      </div>
 
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm font-bold text-royal-blue uppercase tracking-wider">
-            <Footprints size={18} className="text-moss-green" />
-            Pace
-          </label>
-          <select
-            value={prefs.pace}
-            onChange={(e) => setPrefs({ ...prefs, pace: e.target.value as any })}
-            className="w-full p-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-royal-blue focus:border-transparent outline-none transition-all font-serif text-lg bg-stone/20"
-          >
-            <option value="relaxed">☕ Relaxed</option>
-            <option value="moderate">🚶 Moderate</option>
-            <option value="brisk">🏃 Brisk</option>
-          </select>
-        </div>
+      <div className="space-y-2">
+        <label className="flex items-center gap-2 text-sm font-bold text-royal-blue uppercase tracking-wider">
+          <Footprints size={18} className="text-moss-green" />
+          Pace
+        </label>
+        <select
+          value={prefs.pace}
+          onChange={(e) => setPrefs({ ...prefs, pace: e.target.value as any })}
+          className="w-full p-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-royal-blue focus:border-transparent outline-none transition-all font-serif text-lg bg-stone/20 cursor-pointer"
+        >
+          <option value="relaxed">☕ Relaxed</option>
+          <option value="moderate">🚶 Moderate</option>
+          <option value="brisk">🏃 Brisk</option>
+        </select>
       </div>
 
       <button

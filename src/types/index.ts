@@ -24,6 +24,7 @@ export interface TourPreferences {
   theme: Theme;
   durationHours: number;
   pace: 'relaxed' | 'moderate' | 'brisk';
+  date: string;
 }
 
 export interface ItineraryItem {
@@ -39,6 +40,7 @@ export interface Tour {
   totalDistanceKm: number;
   totalDurationMin: number;
   theme: Theme;
+  date: string;
   chosenWeather?: string;
   chosenCrowds?: string;
 }

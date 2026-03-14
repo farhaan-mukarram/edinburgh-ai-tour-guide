@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Tour } from '../types';
-import { Clock, Map as MapIcon, Cloud, Users } from 'lucide-react';
+import { Clock, Map as MapIcon, Cloud, Users, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface ItineraryViewProps {
@@ -15,17 +15,32 @@ export const ItineraryView: React.FC<ItineraryViewProps> = ({ tour }) => {
     return m > 0 ? `${h}h ${m}m` : `${h}h`;
   };
 
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString('en-GB', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between bg-royal-blue p-4 rounded-lg border border-royal-blue shadow-md">
+        <div className="flex flex-wrap items-center justify-between bg-royal-blue p-4 rounded-lg border border-royal-blue shadow-md gap-y-3">
           <div className="flex items-center gap-2 text-stone">
-            <Clock size={18} className="text-gold" />
-            <span className="font-bold text-sm tracking-wide">~{formatDuration(tour.totalDurationMin)} TOTAL</span>
+            <Calendar size={18} className="text-gold" />
+            <span className="font-bold text-sm tracking-wide uppercase">{formatDate(tour.date)}</span>
           </div>
-          <div className="flex items-center gap-2 text-stone">
-            <MapIcon size={18} className="text-gold" />
-            <span className="font-bold text-sm tracking-wide">{tour.totalDistanceKm} KM WALK</span>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2 text-stone">
+              <Clock size={18} className="text-gold" />
+              <span className="font-bold text-sm tracking-wide">~{formatDuration(tour.totalDurationMin)} TOTAL</span>
+            </div>
+            <div className="flex items-center gap-2 text-stone">
+              <MapIcon size={18} className="text-gold" />
+              <span className="font-bold text-sm tracking-wide">{tour.totalDistanceKm} KM WALK</span>
+            </div>
           </div>
         </div>
 
