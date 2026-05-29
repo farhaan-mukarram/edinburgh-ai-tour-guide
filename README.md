@@ -16,6 +16,7 @@ An AI-powered walking tour planner for the city of Edinburgh to reduce decision 
 - React
 - TypeScript
 - TailwindCSS
+- OpenAI AI SDK
 - Vercel AI SDK
 - [Vite](https://vitejs.dev/)
 
